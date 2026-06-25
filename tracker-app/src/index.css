@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════
+   FAANG PREP TRACKER — Design System
+   Premium dark theme with glassmorphism + gradients
+   ═══════════════════════════════════════════════════ */
+
+@theme {
+  --color-bg-primary: #06060b;
+  --color-bg-secondary: #0d0d14;
+  --color-bg-surface: #12121e;
+  --color-bg-surface-hover: #191930;
+  --color-bg-elevated: #1e1e36;
+  --color-border-default: #232340;
+  --color-border-subtle: #1a1a30;
+  --color-border-accent: #6366f1;
+
+  --color-brand-primary: #6366f1;
+  --color-brand-primary-hover: #818cf8;
+  --color-brand-secondary: #8b5cf6;
+  --color-brand-glow: rgba(99, 102, 241, 0.25);
+  --color-brand-gradient-start: #6366f1;
+  --color-brand-gradient-end: #a855f7;
+
+  --color-accent-success: #10b981;
+  --color-accent-warning: #f59e0b;
+  --color-accent-danger: #ef4444;
+  --color-accent-info: #3b82f6;
+
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-text-inverse: #0a0a0f;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+  --radius-full: 9999px;
+}
+
+/* ── Base Reset ──────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── Scrollbar Styling ───────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-primary);
+}
+
+/* ── Utility Classes ─────────────────────────── */
+.glass {
+  background: rgba(18, 18, 30, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border-default);
+}
+
+.glass-strong {
+  background: rgba(18, 18, 30, 0.85);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--color-border-default);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-brand-gradient-start), var(--color-brand-gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-border {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--color-brand-gradient-start), var(--color-brand-gradient-end));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.glow {
+  box-shadow: 0 0 20px var(--color-brand-glow), 0 0 60px rgba(99, 102, 241, 0.1);
+}
+
+.glow-sm {
+  box-shadow: 0 0 10px var(--color-brand-glow);
+}
+
+.surface-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  transition: all 200ms ease-out;
+}
+
+.surface-card:hover {
+  border-color: var(--color-border-accent);
+  box-shadow: 0 0 20px var(--color-brand-glow);
+  transform: translateY(-1px);
+}
+
+.surface-card-static {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+}
+
+/* ── Fire Animation for Streak ───────────────── */
+@keyframes flame {
+  0%, 100% { transform: scale(1) rotate(-2deg); }
+  25% { transform: scale(1.1) rotate(2deg); }
+  50% { transform: scale(1.05) rotate(-1deg); }
+  75% { transform: scale(1.12) rotate(1deg); }
+}
+
+.flame-animate {
+  animation: flame 1.5s ease-in-out infinite;
+}
+
+/* ── Pulse Ring ───────────────────────────────── */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 var(--color-brand-glow); }
+  70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2s infinite;
+}
+
+/* ── Gradient Backgrounds ────────────────────── */
+.bg-mesh {
+  background-image:
+    radial-gradient(at 40% 20%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(99, 102, 241, 0.04) 0px, transparent 50%);
+}
+
+/* ── Progress Bar Animations ─────────────────── */
+@keyframes progress-fill {
+  from { width: 0%; }
+}
+
+.progress-animated {
+  animation: progress-fill 1s ease-out;
+}
+
+/* ── Monaco Editor Overrides ─────────────────── */
+.monaco-container {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+}
+
+/* ── Markdown Content Styling ────────────────── */
+.markdown-content h1 { font-size: 1.75rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+.markdown-content h2 { font-size: 1.375rem; font-weight: 600; margin: 1.25rem 0 0.625rem; }
+.markdown-content h3 { font-size: 1.125rem; font-weight: 600; margin: 1rem 0 0.5rem; }
+.markdown-content p { margin: 0.5rem 0; line-height: 1.7; color: var(--color-text-secondary); }
+.markdown-content code {
+  background: var(--color-bg-elevated);
+  padding: 0.125rem 0.375rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.markdown-content pre {
+  background: var(--color-bg-secondary);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: 0.75rem 0;
+  border: 1px solid var(--color-border-default);
+}
+.markdown-content pre code {
+  background: none;
+  padding: 0;
+}
+.markdown-content ul, .markdown-content ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+  color: var(--color-text-secondary);
+}
+.markdown-content li { margin: 0.25rem 0; line-height: 1.6; }
+.markdown-content a {
+  color: var(--color-brand-primary);
+  text-decoration: none;
+}
+.markdown-content a:hover { text-decoration: underline; }
+.markdown-content blockquote {
+  border-left: 3px solid var(--color-brand-primary);
+  padding-left: 1rem;
+  margin: 0.75rem 0;
+  color: var(--color-text-muted);
+}
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+}
+.markdown-content th, .markdown-content td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border-default);
+  text-align: left;
+}
+.markdown-content th {
+  background: var(--color-bg-elevated);
+  font-weight: 600;
+}
