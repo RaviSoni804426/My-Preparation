@@ -17,7 +17,7 @@ export default function ProjectsPage() {
           <FolderKanban className="w-6 h-6 text-brand-primary" />
           Projects
         </h1>
-        <p className="text-sm text-text-muted mt-1">Build 6 portfolio-worthy projects</p>
+        <p className="text-sm text-text-muted mt-1">Build 10 portfolio-worthy projects</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

@@ -64,13 +64,38 @@ export const useProjectsStore = create<ProjectsStore>()(
     }),
     {
       name: 'faang-prep-projects',
-      // Merge persisted with defaults so new milestones appear
-      merge: (persisted, current) => {
-        const ps = persisted as any;
-        if (ps && ps.projects) {
-          return { ...current, projects: ps.projects };
-        }
-        return current;
+      merge: (persistedState: any, currentState) => {
+        if (!persistedState || !persistedState.projects) return currentState;
+        const persistedProjects = persistedState.projects as Project[];
+        const mergedProjects = currentState.projects.map(currentProj => {
+          const persistedProj = persistedProjects.find(p => p.id === currentProj.id);
+          if (!persistedProj) return currentProj;
+
+          // Merge milestones by ID
+          const mergedMilestones = currentProj.milestones.map(currentM => {
+            const persistedM = persistedProj.milestones.find(m => m.id === currentM.id);
+            return persistedM ? { ...currentM, isCompleted: persistedM.isCompleted } : currentM;
+          });
+
+          const completedCount = mergedMilestones.filter(m => m.isCompleted).length;
+          const progress = mergedMilestones.length > 0 ? Math.round((completedCount / mergedMilestones.length) * 100) : 0;
+
+          return {
+            ...currentProj,
+            status: persistedProj.status || 'not_started',
+            githubUrl: persistedProj.githubUrl || '',
+            deployedUrl: persistedProj.deployedUrl || '',
+            notes: persistedProj.notes || '',
+            milestones: mergedMilestones,
+            progressPercentage: progress,
+            startedAt: persistedProj.startedAt,
+            completedAt: persistedProj.completedAt
+          };
+        });
+        return {
+          ...currentState,
+          projects: mergedProjects
+        };
       },
     }
   )
