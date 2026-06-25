@@ -51,8 +51,8 @@ export default function Dashboard() {
   const remaining = daysRemaining(settings.endDate);
   const currentWeek = getCurrentWeekNumber(settings.startDate);
   const elapsed = daysSinceStart(settings.startDate);
-  const totalDays = 168;
-  const overallProgress = getProgressPercentage(completedIds().size, roadmapTopics.length);
+  const totalDays = 70;
+  const overallProgress = getProgressPercentage(completedIds.size, roadmapTopics.length);
 
   const currentPhase = phaseInfo.find(p => {
     const weeks = p.weeks.split('–').map(Number);
@@ -60,7 +60,7 @@ export default function Dashboard() {
   }) || phaseInfo[0];
 
   const dailyPlan = useMemo(
-    () => generateDailyPlan(settings.startDate, completedIds(), dueRevisions.map(r => r.topicId)),
+    () => generateDailyPlan(settings.startDate, completedIds, dueRevisions.map(r => r.topicId)),
     [settings.startDate, today]
   );
 
@@ -318,7 +318,7 @@ export default function Dashboard() {
         <div className="space-y-3">
           {phaseInfo.map((phase) => {
             const phaseTopics = roadmapTopics.filter(t => t.phase === phase.phase);
-            const phaseCompleted = phaseTopics.filter(t => completedIds().has(t.id)).length;
+            const phaseCompleted = phaseTopics.filter(t => completedIds.has(t.id)).length;
             const pct = getProgressPercentage(phaseCompleted, phaseTopics.length);
             const isCurrentPhase = phase.phase === currentPhase.phase;
 
